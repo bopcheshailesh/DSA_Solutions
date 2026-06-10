@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Cache_with_evictionpolicy_separatedout/Cache_with_evictionpolicy_separatedout.csproj" />
   <Project Path="LRUCache/LRUCache.csproj" />
 </Solution>
