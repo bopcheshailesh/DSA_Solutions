@@ -10,9 +10,11 @@ namespace leetcode_solutions
             //var x = new int[] { 100,1,1000 };
             //var ans = MaximumElementAfterDecrementingAndRearranging(x);
 
-            var s = new string[] { "a", "a", "a" };
-            var w = "ab";
-            Console.WriteLine(NumOfStrings(s,w));
+            //var s = new string[] { "a", "a", "a" };
+            //var w = "ab";
+            //Console.WriteLine(NumOfStrings(s,w));
+
+            Console.WriteLine(NumberOfSubstrings("abcabc"));
         }
 
         public static int MaximumElementAfterDecrementingAndRearranging(int[] arr)
@@ -56,6 +58,70 @@ namespace leetcode_solutions
             }
 
             return ans;
+        }
+
+        public static int NumberOfSubstrings(string s)
+        {
+            int count = 0;
+
+            //O[N*N*N]
+            //for (int k = 0; k < s.Length; k++)
+            //{
+            //    for (int i = k; i < s.Length; i++)
+            //    {
+            //        bool isA = false;
+            //        bool isB = false;
+            //        bool isC = false;
+
+            //        for (int j = k; j <= i; j++)
+            //        {
+            //            if (s[j] == 'a') isA = true;
+            //            if (s[j] == 'b') isB = true;
+            //            if (s[j] == 'c') isC = true;
+            //        }
+            //        if (isA && isB && isC) count++;
+            //    }
+            //}
+
+            //O[N]
+            int l = 0;
+            int r = 0;
+            var dict = new Dictionary<char, int>() { {'a', 0 }, { 'b', 0 } , { 'c', 0 } };
+            int len = s.Length;
+            bool insert = true;
+            while (l <= r && r < len)
+            {
+                if (insert && (s[r]=='a' || s[r] == 'b' || s[r] == 'c'))
+                {
+                    dict[s[r]] += 1;
+                }
+
+                if (dict['a'] > 0 && dict['b'] > 0 && dict['c'] > 0) 
+                {
+                    count = count + 1 + (len - 1 - r);
+                    dict[s[l]] -= 1;
+                    l += 1;
+                    insert = false;
+                } 
+                else 
+                {
+                    r += 1;
+                    insert = true;
+                }
+            }
+
+            while (l < len)
+            {
+                if (dict['a'] > 0 && dict['b'] > 0 && dict['c'] > 0)
+                {
+                    count = count + 1;                                      
+                }
+                dict[s[l]] -= 1;
+                l += 1;
+            }
+
+
+            return count;
         }
     }
 
